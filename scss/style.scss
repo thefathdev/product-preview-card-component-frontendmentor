@@ -36,11 +36,18 @@ body {
   border-radius: 10px;
   overflow: hidden;
 
+  animation: shift-up 500ms ease-in-out;
+
   &__text {
     padding: 1.5em;
     display: flex;
     flex-direction: column;
     font-size: var(--fs-400);
+
+    &:focus-within .card__heading::before,
+    &:hover .card__heading::before {
+      transform: translateY(20%) translateX(-4px) scaleX(1);
+    }
   }
 
   &__tag {
@@ -58,6 +65,21 @@ body {
     line-height: 1;
     font-size: var(--fs-700);
     color: var(--clr-neutral-700);
+    position: relative;
+    z-index: 1;
+
+    &::before {
+      content: '';
+      width: 8ch;
+      height: 0.5em;
+      background-color: var(--clr-secondary);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+      transform: translateY(20%) translateX(calc(-50% - 4px)) scaleX(0);
+      transition: transform 500ms ease-in-out;
+    }
   }
 
   &__body {
@@ -162,5 +184,20 @@ body {
     &--desktop {
       display: block;
     }
+  }
+}
+
+@keyframes shift-up {
+  from {
+    transform: translateY(50%);
+    opacity: 0;
+  }
+
+  75% {
+    opacity: 1;
+  }
+
+  to {
+    transform: none;
   }
 }
